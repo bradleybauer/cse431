@@ -49,8 +49,10 @@ array<I,POPULATION_SIZE> population;
 #define test _Unchecked_test
 #define first _Find_first
 #define next _Find_next
-#define first_shared _Find_first_shared
-#define next_shared _Find_next_shared
+#define first_and _Find_first_and
+#define next_and _Find_next_and
+#define first_or _Find_first_or
+#define next_or _Find_next_or
 
 void make_valid_cover(I& people_included, I& skills_included) {
     // Incude people who have skills that are unsatisfied
@@ -59,8 +61,8 @@ void make_valid_cover(I& people_included, I& skills_included) {
     for (size_t k = skills_not_included.first(); k < K; k = skills_not_included.next(k)) {
         size_t max_person_value = 0;
         size_t max_person = 0;
-        for (size_t j = people_avail.first_shared(skill_2_people[k]); j < NUM_PEOPLE; j = people_avail.next_shared(skill_2_people[k],j)) {
-            size_t contrib = skills_not_included.count_shared(person_2_skills[j]);
+        for (size_t j = people_avail.first_and(skill_2_people[k]); j < NUM_PEOPLE; j = people_avail.next_and(skill_2_people[k],j)) {
+            size_t contrib = skills_not_included.count_and(person_2_skills[j]);
             if (contrib > max_person_value) {
                 max_person_value = contrib;
                 max_person = j;
@@ -93,7 +95,7 @@ I generate_by_rarity() {
             double contrib = 0;
             I skills = person_2_skills[j] & skills_not_included;
             for (int k = skills.first(); k < K; k=skills.next(k))
-                contrib += 1./people_avail.count_shared(skill_2_people[k]);
+                contrib += 1./people_avail.count_and(skill_2_people[k]);
             if (contrib > max_person_value) {
                 max_person_value = contrib;
                 max_person = j;
@@ -110,11 +112,10 @@ I generate_by_rarity() {
 I mate(I& x, I& y, size_t best) {
     I people_included;
     I skills_included;
-    I cover = x | y;
     bernoulli_distribution bdist(.5*best/float(NUM_PEOPLE));
     bernoulli_distribution sdist(2./NUM_PEOPLE);
     //for (int j = 0; j < NUM_PEOPLE; ++j) {
-    for (int j = cover.first(); j < NUM_PEOPLE; j = cover.next(j)) {
+    for (int j = x.first_or(y); j < NUM_PEOPLE; j = x.next_or(y,j)) {
         if (bdist(gen))
             people_included.set(j,x.test(j));
         if (bdist(gen))

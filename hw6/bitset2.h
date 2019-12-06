@@ -163,34 +163,8 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	  _M_w[__i] ^= __x._M_w[__i];
       }
 
-      void
-      _M_do_add(const int& __x) _GLIBCXX_NOEXCEPT
-      {
-	for (size_t __i = 0; __i < _Nw; __i++) {
-	  if (_M_w[__i] == -1) {
-	    _M_w[__i] = 0;
-	  } else {
-	    _M_w[__i] += 1;
-	    break;
-	  }
-	}
-      }
-
-      void
-      _M_do_sub(const int& __x) _GLIBCXX_NOEXCEPT
-      {
-	for (size_t __i = 0; __i < _Nw; __i++) {
-	  if (_M_w[__i] == 0) {
-	    _M_w[__i] = -1;
-	  } else {
-	    _M_w[__i] -= 1;
-	    break;
-	  }
-	}
-      }
-
       size_t
-      _M_do_first_shared(const _Base_bitset<_Nw>& __x) const _GLIBCXX_NOEXCEPT
+      _M_do_first_and(const _Base_bitset<_Nw>& __x) const _GLIBCXX_NOEXCEPT
       {
       	for (size_t __i = 0; __i < _Nw; __i++) {
       	  _WordT __and = _M_w[__i] & __x._M_w[__i];
@@ -201,6 +175,17 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       	return _Nw * _GLIBCXX_BITSET_BITS_PER_WORD;
       }
 
+      size_t
+      _M_do_first_or(const _Base_bitset<_Nw>& __x) const _GLIBCXX_NOEXCEPT
+      {
+      	for (size_t __i = 0; __i < _Nw; __i++) {
+      	  _WordT __and = _M_w[__i] | __x._M_w[__i];
+      	  if (__and != static_cast<_WordT>(0))
+      	    return (__i * _GLIBCXX_BITSET_BITS_PER_WORD
+      		    + __builtin_ctzl(__and));
+      	}
+      	return _Nw * _GLIBCXX_BITSET_BITS_PER_WORD;
+      }
 
       void
       _M_do_left_shift(size_t __shift) _GLIBCXX_NOEXCEPT;
@@ -277,16 +262,21 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       size_t
       _M_do_find_first(size_t) const _GLIBCXX_NOEXCEPT;
 
-      // find first "on" bit
       size_t
-      _M_do_find_first(const _Base_bitset<_Nw>&, size_t) const _GLIBCXX_NOEXCEPT;
+      _M_do_find_first_and(const _Base_bitset<_Nw>&, size_t) const _GLIBCXX_NOEXCEPT;
+
+      size_t
+      _M_do_find_first_or(const _Base_bitset<_Nw>&, size_t) const _GLIBCXX_NOEXCEPT;
 
       // find the next "on" bit that follows "prev"
       size_t
       _M_do_find_next(size_t, size_t) const _GLIBCXX_NOEXCEPT;
 
       size_t
-      _M_do_find_next(const _Base_bitset<_Nw>&, size_t, size_t) const _GLIBCXX_NOEXCEPT;
+      _M_do_find_next_and(const _Base_bitset<_Nw>&, size_t, size_t) const _GLIBCXX_NOEXCEPT;
+
+      size_t
+      _M_do_find_next_or(const _Base_bitset<_Nw>&, size_t, size_t) const _GLIBCXX_NOEXCEPT;
     };
 
   // Definitions of non-inline functions from _Base_bitset.
@@ -389,11 +379,27 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
   template<size_t _Nw>
     size_t
     _Base_bitset<_Nw>::
-    _M_do_find_first(const _Base_bitset<_Nw>& __other, size_t __not_found) const _GLIBCXX_NOEXCEPT
+    _M_do_find_first_and(const _Base_bitset<_Nw>& __other, size_t __not_found) const _GLIBCXX_NOEXCEPT
     {
       for (size_t __i = 0; __i < _Nw; __i++)
 	{
 	  _WordT __thisword = _M_w[__i] & __other._M_w[__i];
+	  if (__thisword != static_cast<_WordT>(0))
+	    return (__i * _GLIBCXX_BITSET_BITS_PER_WORD
+		    + __builtin_ctzl(__thisword));
+	}
+      // not found, so return an indication of failure.
+      return __not_found;
+    }
+
+  template<size_t _Nw>
+    size_t
+    _Base_bitset<_Nw>::
+    _M_do_find_first_or(const _Base_bitset<_Nw>& __other, size_t __not_found) const _GLIBCXX_NOEXCEPT
+    {
+      for (size_t __i = 0; __i < _Nw; __i++)
+	{
+	  _WordT __thisword = _M_w[__i] | __other._M_w[__i];
 	  if (__thisword != static_cast<_WordT>(0))
 	    return (__i * _GLIBCXX_BITSET_BITS_PER_WORD
 		    + __builtin_ctzl(__thisword));
@@ -441,7 +447,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
   template<size_t _Nw>
     size_t
     _Base_bitset<_Nw>::
-    _M_do_find_next(const _Base_bitset<_Nw>& __other, size_t __prev, size_t __not_found) const _GLIBCXX_NOEXCEPT
+    _M_do_find_next_and(const _Base_bitset<_Nw>& __other, size_t __prev, size_t __not_found) const _GLIBCXX_NOEXCEPT
     {
       // make bound inclusive
       ++__prev;
@@ -472,286 +478,57 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	}
       // not found, so return an indication of failure.
       return __not_found;
-    } // end _M_do_find_next
+    } // end _M_do_find_next_and
+
+  template<size_t _Nw>
+    size_t
+    _Base_bitset<_Nw>::
+    _M_do_find_next_or(const _Base_bitset<_Nw>& __other, size_t __prev, size_t __not_found) const _GLIBCXX_NOEXCEPT
+    {
+      // make bound inclusive
+      ++__prev;
+
+      // check out of bounds
+      if (__prev >= _Nw * _GLIBCXX_BITSET_BITS_PER_WORD)
+	return __not_found;
+
+      // search first word
+      size_t __i = _S_whichword(__prev);
+      _WordT __thisword = _M_w[__i] | __other._M_w[__i];
+
+      // mask off bits below bound
+      __thisword &= (~static_cast<_WordT>(0)) << _S_whichbit(__prev);
+
+      if (__thisword != static_cast<_WordT>(0))
+	return (__i * _GLIBCXX_BITSET_BITS_PER_WORD
+		+ __builtin_ctzl(__thisword));
+
+      // check subsequent words
+      __i++;
+      for (; __i < _Nw; __i++)
+	{
+	  __thisword = _M_w[__i] | __other._M_w[__i];
+	  if (__thisword != static_cast<_WordT>(0))
+	    return (__i * _GLIBCXX_BITSET_BITS_PER_WORD
+		    + __builtin_ctzl(__thisword));
+	}
+      // not found, so return an indication of failure.
+      return __not_found;
+    } // end _M_do_find_next_or
 
   /**
    *  Base class, specialization for a single word.
    *
    *  See documentation for bitset.
   */
-  template<>
-    struct _Base_bitset<1>
-    {
-      typedef unsigned long _WordT;
-      _WordT _M_w;
-
-      _GLIBCXX_CONSTEXPR _Base_bitset() _GLIBCXX_NOEXCEPT
-      : _M_w(0)
-      { }
-
-#if __cplusplus >= 201103L
-      constexpr _Base_bitset(unsigned long long __val) noexcept
-#else
-      _Base_bitset(unsigned long __val)
-#endif
-      : _M_w(__val)
-      { }
-
-      static _GLIBCXX_CONSTEXPR size_t
-      _S_whichword(size_t __pos) _GLIBCXX_NOEXCEPT
-      { return __pos / _GLIBCXX_BITSET_BITS_PER_WORD; }
-
-      static _GLIBCXX_CONSTEXPR size_t
-      _S_whichbyte(size_t __pos) _GLIBCXX_NOEXCEPT
-      { return (__pos % _GLIBCXX_BITSET_BITS_PER_WORD) / __CHAR_BIT__; }
-
-      static _GLIBCXX_CONSTEXPR size_t
-      _S_whichbit(size_t __pos) _GLIBCXX_NOEXCEPT
-      {  return __pos % _GLIBCXX_BITSET_BITS_PER_WORD; }
-
-      static _GLIBCXX_CONSTEXPR _WordT
-      _S_maskbit(size_t __pos) _GLIBCXX_NOEXCEPT
-      { return (static_cast<_WordT>(1)) << _S_whichbit(__pos); }
-
-      _WordT&
-      _M_getword(size_t) _GLIBCXX_NOEXCEPT
-      { return _M_w; }
-
-      _GLIBCXX_CONSTEXPR _WordT
-      _M_getword(size_t) const _GLIBCXX_NOEXCEPT
-      { return _M_w; }
-
-#if __cplusplus >= 201103L
-      const _WordT*
-      _M_getdata() const noexcept
-      { return &_M_w; }
-#endif
-
-      _WordT&
-      _M_hiword() _GLIBCXX_NOEXCEPT
-      { return _M_w; }
-
-      _GLIBCXX_CONSTEXPR _WordT
-      _M_hiword() const _GLIBCXX_NOEXCEPT
-      { return _M_w; }
-
-      void
-      _M_do_and(const _Base_bitset<1>& __x) _GLIBCXX_NOEXCEPT
-      { _M_w &= __x._M_w; }
-
-      void
-      _M_do_or(const _Base_bitset<1>& __x) _GLIBCXX_NOEXCEPT
-      { _M_w |= __x._M_w; }
-
-      void
-      _M_do_xor(const _Base_bitset<1>& __x) _GLIBCXX_NOEXCEPT
-      { _M_w ^= __x._M_w; }
-
-      void
-      _M_do_left_shift(size_t __shift) _GLIBCXX_NOEXCEPT
-      { _M_w <<= __shift; }
-
-      void
-      _M_do_right_shift(size_t __shift) _GLIBCXX_NOEXCEPT
-      { _M_w >>= __shift; }
-
-      void
-      _M_do_flip() _GLIBCXX_NOEXCEPT
-      { _M_w = ~_M_w; }
-
-      void
-      _M_do_set() _GLIBCXX_NOEXCEPT
-      { _M_w = ~static_cast<_WordT>(0); }
-
-      void
-      _M_do_reset() _GLIBCXX_NOEXCEPT
-      { _M_w = 0; }
-
-      bool
-      _M_is_equal(const _Base_bitset<1>& __x) const _GLIBCXX_NOEXCEPT
-      { return _M_w == __x._M_w; }
-
-      template<size_t _Nb>
-        bool
-        _M_are_all() const _GLIBCXX_NOEXCEPT
-        { return _M_w == (~static_cast<_WordT>(0)
-			  >> (_GLIBCXX_BITSET_BITS_PER_WORD - _Nb)); }
-
-      bool
-      _M_is_any() const _GLIBCXX_NOEXCEPT
-      { return _M_w != 0; }
-
-      size_t
-      _M_do_count() const _GLIBCXX_NOEXCEPT
-      { return __builtin_popcountl(_M_w); }
-
-      unsigned long
-      _M_do_to_ulong() const _GLIBCXX_NOEXCEPT
-      { return _M_w; }
-
-#if __cplusplus >= 201103L
-      unsigned long long
-      _M_do_to_ullong() const noexcept
-      { return _M_w; }
-#endif
-
-      size_t
-      _M_do_find_first(size_t __not_found) const _GLIBCXX_NOEXCEPT
-      {
-        if (_M_w != 0)
-          return __builtin_ctzl(_M_w);
-        else
-          return __not_found;
-      }
-
-      // find the next "on" bit that follows "prev"
-      size_t
-      _M_do_find_next(size_t __prev, size_t __not_found) const
-	_GLIBCXX_NOEXCEPT
-      {
-	++__prev;
-	if (__prev >= ((size_t) _GLIBCXX_BITSET_BITS_PER_WORD))
-	  return __not_found;
-
-	_WordT __x = _M_w >> __prev;
-	if (__x != 0)
-	  return __builtin_ctzl(__x) + __prev;
-	else
-	  return __not_found;
-      }
-    };
+  // I removed this
 
   /**
    *  Base class, specialization for no storage (zero-length %bitset).
    *
    *  See documentation for bitset.
   */
-  template<>
-    struct _Base_bitset<0>
-    {
-      typedef unsigned long _WordT;
-
-      _GLIBCXX_CONSTEXPR _Base_bitset() _GLIBCXX_NOEXCEPT
-      { }
-
-#if __cplusplus >= 201103L
-      constexpr _Base_bitset(unsigned long long) noexcept
-#else
-      _Base_bitset(unsigned long)
-#endif
-      { }
-
-      static _GLIBCXX_CONSTEXPR size_t
-      _S_whichword(size_t __pos) _GLIBCXX_NOEXCEPT
-      { return __pos / _GLIBCXX_BITSET_BITS_PER_WORD; }
-
-      static _GLIBCXX_CONSTEXPR size_t
-      _S_whichbyte(size_t __pos) _GLIBCXX_NOEXCEPT
-      { return (__pos % _GLIBCXX_BITSET_BITS_PER_WORD) / __CHAR_BIT__; }
-
-      static _GLIBCXX_CONSTEXPR size_t
-      _S_whichbit(size_t __pos) _GLIBCXX_NOEXCEPT
-      {  return __pos % _GLIBCXX_BITSET_BITS_PER_WORD; }
-
-      static _GLIBCXX_CONSTEXPR _WordT
-      _S_maskbit(size_t __pos) _GLIBCXX_NOEXCEPT
-      { return (static_cast<_WordT>(1)) << _S_whichbit(__pos); }
-
-      // This would normally give access to the data.  The bounds-checking
-      // in the bitset class will prevent the user from getting this far,
-      // but (1) it must still return an lvalue to compile, and (2) the
-      // user might call _Unchecked_set directly, in which case this /needs/
-      // to fail.  Let's not penalize zero-length users unless they actually
-      // make an unchecked call; all the memory ugliness is therefore
-      // localized to this single should-never-get-this-far function.
-      _WordT&
-      _M_getword(size_t) _GLIBCXX_NOEXCEPT
-      {
-	__throw_out_of_range(__N("_Base_bitset::_M_getword"));
-	return *new _WordT;
-      }
-
-      _GLIBCXX_CONSTEXPR _WordT
-      _M_getword(size_t) const _GLIBCXX_NOEXCEPT
-      { return 0; }
-
-      _GLIBCXX_CONSTEXPR _WordT
-      _M_hiword() const _GLIBCXX_NOEXCEPT
-      { return 0; }
-
-      void
-      _M_do_and(const _Base_bitset<0>&) _GLIBCXX_NOEXCEPT
-      { }
-
-      void
-      _M_do_or(const _Base_bitset<0>&) _GLIBCXX_NOEXCEPT
-      { }
-
-      void
-      _M_do_xor(const _Base_bitset<0>&) _GLIBCXX_NOEXCEPT
-      { }
-
-      void
-      _M_do_left_shift(size_t) _GLIBCXX_NOEXCEPT
-      { }
-
-      void
-      _M_do_right_shift(size_t) _GLIBCXX_NOEXCEPT
-      { }
-
-      void
-      _M_do_flip() _GLIBCXX_NOEXCEPT
-      { }
-
-      void
-      _M_do_set() _GLIBCXX_NOEXCEPT
-      { }
-
-      void
-      _M_do_reset() _GLIBCXX_NOEXCEPT
-      { }
-
-      // Are all empty bitsets equal to each other?  Are they equal to
-      // themselves?  How to compare a thing which has no state?  What is
-      // the sound of one zero-length bitset clapping?
-      bool
-      _M_is_equal(const _Base_bitset<0>&) const _GLIBCXX_NOEXCEPT
-      { return true; }
-
-      template<size_t _Nb>
-        bool
-        _M_are_all() const _GLIBCXX_NOEXCEPT
-        { return true; }
-
-      bool
-      _M_is_any() const _GLIBCXX_NOEXCEPT
-      { return false; }
-
-      size_t
-      _M_do_count() const _GLIBCXX_NOEXCEPT
-      { return 0; }
-
-      unsigned long
-      _M_do_to_ulong() const _GLIBCXX_NOEXCEPT
-      { return 0; }
-
-#if __cplusplus >= 201103L
-      unsigned long long
-      _M_do_to_ullong() const noexcept
-      { return 0; }
-#endif
-
-      // Normally "not found" is the size, but that could also be
-      // misinterpreted as an index in this corner case.  Oh well.
-      size_t
-      _M_do_find_first(size_t) const _GLIBCXX_NOEXCEPT
-      { return 0; }
-
-      size_t
-      _M_do_find_next(size_t, size_t) const _GLIBCXX_NOEXCEPT
-      { return 0; }
-    };
-
+  // And this
 
   // Helper class to zero out the unused high-order bits in the highest word.
   template<size_t _Extrabits>
@@ -1469,17 +1246,10 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
 
       size_t
-      count_shared(const bitset<_Nb>& __rhs) const _GLIBCXX_NOEXCEPT
+      count_and(const bitset<_Nb>& __rhs) const _GLIBCXX_NOEXCEPT
       {
           return this->_M_do_and_count(__rhs);
       }
-
-      size_t
-      first_shared(const bitset<_Nb>& __rhs) const _GLIBCXX_NOEXCEPT
-      {
-          return this->_M_do_first_shared(__rhs);
-      }
-
 
       //@{
       /// Self-explanatory.
@@ -1503,8 +1273,12 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       { return this->_M_do_find_first(_Nb); }
 
       size_t
-      _Find_first_shared(const bitset<_Nb>& __other) const _GLIBCXX_NOEXCEPT
-      { return this->_M_do_find_first(__other, _Nb); }
+      _Find_first_and(const bitset<_Nb>& __other) const _GLIBCXX_NOEXCEPT
+      { return this->_M_do_find_first_and(__other, _Nb); }
+
+      size_t
+      _Find_first_or(const bitset<_Nb>& __other) const _GLIBCXX_NOEXCEPT
+      { return this->_M_do_find_first_or(__other, _Nb); }
 
       /**
        *  @brief  Finds the index of the next "on" bit after prev.
@@ -1518,8 +1292,12 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       { return this->_M_do_find_next(__prev, _Nb); }
 
       size_t
-      _Find_next_shared(const bitset<_Nb>& __other, size_t __prev) const _GLIBCXX_NOEXCEPT
-      { return this->_M_do_find_next(__other, __prev, _Nb); }
+      _Find_next_and(const bitset<_Nb>& __other, size_t __prev) const _GLIBCXX_NOEXCEPT
+      { return this->_M_do_find_next_and(__other, __prev, _Nb); }
+
+      size_t
+      _Find_next_or(const bitset<_Nb>& __other, size_t __prev) const _GLIBCXX_NOEXCEPT
+      { return this->_M_do_find_next_or(__other, __prev, _Nb); }
     };
 
   // Definitions of non-inline member functions.
