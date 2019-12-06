@@ -1,0 +1,32 @@
+15 12
+EvolutionaryBiology Plastics Statistics Medicine Polymers PersonalizedMedacine Cosmology CloudComputing AlienLanguages Sensors AgentBasedModeling Cryptography
+4
+EvolutionaryBiology Plastics Statistics Medicine
+4
+EvolutionaryBiology Plastics Cosmology Sensors
+4
+EvolutionaryBiology Statistics Medicine Cryptography
+4
+EvolutionaryBiology Medicine Cosmology Sensors
+4
+EvolutionaryBiology AlienLanguages Sensors AgentBasedModeling
+4
+Plastics Statistics CloudComputing AgentBasedModeling
+4
+Plastics Medicine CloudComputing Sensors
+4
+Plastics Polymers CloudComputing AgentBasedModeling
+4
+Statistics Medicine Polymers PersonalizedMedacine
+4
+Statistics Polymers Cosmology AlienLanguages
+4
+Statistics PersonalizedMedacine AgentBasedModeling Cryptography
+4
+Medicine PersonalizedMedacine AlienLanguages AgentBasedModeling
+4
+Polymers PersonalizedMedacine Cosmology CloudComputing
+4
+Polymers PersonalizedMedacine AlienLanguages Cryptography
+4
+CloudComputing AlienLanguages Sensors Cryptography

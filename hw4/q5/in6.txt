@@ -1,0 +1,112 @@
+55 80
+Agriculture Semiconductors Biosensors Sensors MachineLearning CivilEngineering AerospaceEngineering ImageRecognition TemporalDynamics PlasmaPhysics Robotics Energy AsteroidMining MedicalImaging Systematics Microbiology StructualBiology VirtualReality Hydrogeology BioEngineering Biometrics Cryobiology SphericalHarmonics Astrobiology EnvironmentalScience Batteries MolecularBiology Xenobiology MechanicalEngineering Exoskeletons DistributedSystems Philosophy DigitalEvolution ChemicalEngineering Cryptography Genetics EvolutionaryRobotics MultivarateCalculus Simulation Geochemistry FoodSafety MetabolicEngineering ForceFields ElectricalEngineering QuantumPhysics Nanomanufacturing MechanizedVehicles CoRobotics Geology Metals Acoustics CelestialDynamics Relativity EvolutionaryBiology SmartGrids Fermentation Meteorology Biogeography Electromagnetism StatisticalMechanics Cybersecurity DataManagement Ceramics ComputationalBiology Cybernetics Plastics Networks Mathematics Statistics Thermodynamics Optics Botany Bioinstrumentation AugmentedReality Ecology GameTheory BiochemicalProcesses Hematology Cosmology 3DPrinting
+3
+EnvironmentalScience Exoskeletons Cybernetics
+2
+PlasmaPhysics Biogeography
+7
+Hydrogeology MolecularBiology Genetics MechanizedVehicles Acoustics ComputationalBiology Cosmology
+3
+MedicalImaging ElectricalEngineering Plastics
+7
+Agriculture Biometrics Cryobiology SphericalHarmonics ChemicalEngineering Simulation Ecology
+5
+Agriculture Philosophy ChemicalEngineering MetabolicEngineering Ceramics
+4
+Semiconductors BioEngineering Mathematics Optics
+6
+MachineLearning Cryptography FoodSafety Nanomanufacturing Bioinstrumentation Cosmology
+9
+Cryobiology Batteries MechanicalEngineering Exoskeletons MultivarateCalculus MechanizedVehicles Biogeography Cosmology 3DPrinting
+7
+TemporalDynamics Cryptography FoodSafety Nanomanufacturing CoRobotics Biogeography BiochemicalProcesses
+0
+
+7
+PlasmaPhysics VirtualReality SphericalHarmonics Astrobiology EnvironmentalScience Geology Relativity
+3
+MetabolicEngineering QuantumPhysics Cybersecurity
+5
+ImageRecognition Robotics Hydrogeology Genetics Acoustics
+5
+Energy SmartGrids Fermentation Statistics AugmentedReality
+7
+Systematics EvolutionaryRobotics Relativity SmartGrids StatisticalMechanics DataManagement Plastics
+4
+Biosensors Cryptography ForceFields MechanizedVehicles
+4
+QuantumPhysics CoRobotics Electromagnetism Optics
+7
+Energy Hydrogeology MechanicalEngineering Geochemistry CoRobotics DataManagement ComputationalBiology
+7
+Semiconductors CivilEngineering PlasmaPhysics VirtualReality Astrobiology Xenobiology Thermodynamics
+5
+Sensors Microbiology StructualBiology EvolutionaryBiology Statistics
+3
+MedicalImaging Ecology 3DPrinting
+1
+AsteroidMining
+5
+Biosensors Microbiology Biometrics MultivarateCalculus Thermodynamics
+1
+Metals
+7
+AsteroidMining VirtualReality Biometrics EnvironmentalScience DistributedSystems Philosophy Meteorology
+5
+Robotics Cryobiology Xenobiology ElectricalEngineering Cybersecurity
+8
+Agriculture AerospaceEngineering DistributedSystems DigitalEvolution EvolutionaryRobotics MechanizedVehicles Botany AugmentedReality
+4
+MachineLearning Energy Systematics ForceFields
+2
+Astrobiology BiochemicalProcesses
+8
+ImageRecognition AsteroidMining StructualBiology DigitalEvolution Simulation Electromagnetism GameTheory Hematology
+3
+Batteries Metals Biogeography
+1
+Simulation
+8
+AerospaceEngineering Batteries MechanicalEngineering Metals Meteorology Ceramics Mathematics Cosmology
+3
+Xenobiology Thermodynamics 3DPrinting
+3
+MolecularBiology ChemicalEngineering CelestialDynamics
+4
+CivilEngineering AerospaceEngineering Robotics Microbiology
+6
+Biosensors StructualBiology BioEngineering DistributedSystems EvolutionaryBiology Electromagnetism
+4
+CivilEngineering Systematics ElectricalEngineering AugmentedReality
+6
+VirtualReality Biometrics Nanomanufacturing SmartGrids GameTheory Hematology
+4
+TemporalDynamics PlasmaPhysics CoRobotics BiochemicalProcesses
+3
+MedicalImaging DigitalEvolution CelestialDynamics
+5
+Astrobiology MechanicalEngineering Simulation EvolutionaryBiology Meteorology
+6
+BioEngineering Exoskeletons Philosophy FoodSafety MetabolicEngineering Networks
+6
+CivilEngineering TemporalDynamics ElectricalEngineering Geology Relativity StatisticalMechanics
+5
+Energy Genetics Electromagnetism Cybersecurity Cybernetics
+5
+AsteroidMining SphericalHarmonics Exoskeletons Geochemistry DataManagement
+7
+Biosensors Sensors DistributedSystems EvolutionaryRobotics ComputationalBiology Networks Optics
+9
+ForceFields Acoustics Fermentation StatisticalMechanics Cybersecurity Plastics Networks Statistics Hematology
+7
+Sensors MultivarateCalculus ForceFields Nanomanufacturing Ceramics Cybernetics Botany
+3
+Semiconductors MolecularBiology QuantumPhysics
+5
+MachineLearning ImageRecognition EvolutionaryRobotics StatisticalMechanics Bioinstrumentation
+11
+Agriculture TemporalDynamics Robotics Systematics Geochemistry Relativity ComputationalBiology Networks Thermodynamics Botany Bioinstrumentation
+2
+Fermentation Ecology
+3
+Genetics Mathematics GameTheory

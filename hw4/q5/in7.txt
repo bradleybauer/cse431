@@ -1,0 +1,92 @@
+45 60
+3DPrinting Nanomaterials Superconductors Cryptography Botany Semiconductors Polymers ParticalPhysics Ethology Relativity Bioinstrumentation VirtualReality MechanicalEngineering AtmosphereScience Metals Aerobiology StructualBiology Plastics EvolutionaryBiology Algorithms ComputationalBiology Medicine Systematics DataManagement InformationTheory ChemicalEngineering Genetics Thermodynamics WasteManagement MachineLearning Cryobiology Acoustics XenoPsychology Geology CognitiveScience SyntheticBiology Batteries Cybernetics Paleontology DistributedSystems Agriculture Bioinformatics Biogeography Simulation AugmentedReality InformationTransfer Biosensors Networks PlasmaPhysics EnvironmentalScience Geochemistry FoodSafety SmartGrids CloudComputing AlienLanguages Xenobiology NaturalComputing Robotics Biomanufacturing MedicalImaging
+4
+ParticalPhysics MechanicalEngineering Cryobiology Biogeography
+3
+Plastics Algorithms XenoPsychology
+2
+Relativity EvolutionaryBiology
+1
+Bioinformatics
+6
+Aerobiology InformationTransfer PlasmaPhysics Geochemistry FoodSafety SmartGrids
+5
+Superconductors Aerobiology Systematics SyntheticBiology Bioinformatics
+5
+EvolutionaryBiology InformationTheory Geology Geochemistry Robotics
+1
+Biomanufacturing
+3
+Thermodynamics Agriculture Biosensors
+1
+DataManagement
+4
+3DPrinting Bioinstrumentation Biogeography CloudComputing
+2
+Ethology CognitiveScience
+2
+VirtualReality Metals
+3
+ComputationalBiology MachineLearning Acoustics
+4
+Metals MachineLearning Bioinformatics FoodSafety
+5
+AtmosphereScience InformationTheory Batteries InformationTransfer NaturalComputing
+2
+Medicine Thermodynamics
+4
+Cryptography Semiconductors Metals Cybernetics
+1
+SmartGrids
+3
+Bioinstrumentation Batteries AlienLanguages
+0
+
+3
+ParticalPhysics CloudComputing MedicalImaging
+3
+Superconductors Biosensors Robotics
+0
+
+5
+VirtualReality Thermodynamics Paleontology SmartGrids CloudComputing
+3
+Ethology Bioinstrumentation Paleontology
+3
+DistributedSystems AugmentedReality Biosensors
+0
+
+0
+
+1
+MechanicalEngineering
+6
+3DPrinting Botany VirtualReality Systematics Genetics CognitiveScience
+3
+WasteManagement Cryobiology PlasmaPhysics
+4
+ChemicalEngineering MachineLearning EnvironmentalScience CloudComputing
+1
+Aerobiology
+2
+VirtualReality Simulation
+2
+Networks Biomanufacturing
+5
+Nanomaterials MachineLearning Geology EnvironmentalScience AlienLanguages
+3
+MechanicalEngineering ComputationalBiology ChemicalEngineering
+5
+Superconductors Relativity Aerobiology StructualBiology ComputationalBiology
+3
+Nanomaterials ComputationalBiology DistributedSystems
+4
+Plastics Thermodynamics Geology Biogeography
+4
+DistributedSystems Networks FoodSafety Biomanufacturing
+5
+Bioinstrumentation Genetics EnvironmentalScience Xenobiology Biomanufacturing
+2
+Polymers Biosensors
+1
+Geochemistry
